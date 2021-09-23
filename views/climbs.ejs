@@ -1,0 +1,15 @@
+<%- include("partials/header") %>
+		<div class="container">
+			<div class="row mt-2">
+			<% climbs.forEach((climb) => { %>
+				<div class="card m-3">
+					<a href="/climbs/<%= climb._id %>">
+					<img class="card-img card-img-top" src="<%= climb.image %>" alt="Picture of Climb">
+					</a>
+					<h3 class="card-title mt-3"><%= climb.title %></h3>
+					<p class="card-text mb-3 mx-3"><%= climb.description %></p>
+				</div>
+			<% }) %>
+			</div>
+		</div>
+<%- include("partials/footer") %>
