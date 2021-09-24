@@ -14,7 +14,12 @@ const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session');
 
 // Config Import
-const config = require('./config');
+try {
+	var config = require('./config');
+} catch (error) {
+	console.log("Could not import config. This probably means you're not working locally.");
+	console.log(error);
+}
 
 // Route Imports
 const climbRoutes = require('./routes/climbs');
@@ -46,7 +51,13 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Mongoose Config
-mongoose.connect(config.db.connection, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+try {
+	mongoose.connect(config.db.connection, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+} catch (error) {
+	console.log("Could not connect using config. Not working locally.");
+	mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+}
+mongoose.Promise = global.Promise;
 
 
 // Express Config
@@ -55,7 +66,7 @@ app.use(express.static("public"));
 
 // Express Session Config
 app.use(expressSession({
-	secret: "sdj;lkgajg;alkgjwe;lgkje;",
+	secret: process.env.ES_SECRET || config.expressSession.secret,
 	resave: false,
 	saveUninitialized: false
 }));
@@ -86,6 +97,6 @@ app.use("/climbs/:id/comments", commentRoutes);
 // ==========================
 // LISTEN
 // ==========================
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log("rock_climb is running...")
 });
