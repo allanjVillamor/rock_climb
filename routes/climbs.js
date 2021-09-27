@@ -68,6 +68,20 @@ router.get("/search", async (req, res) => {
 	}
 })
 
+// Genre
+router.get("/type/:type", async (req, res) => {
+	//  Check if the given genre is valid
+	const validType = ["bouldering", "lead", "free solo"];
+	if (validType.includes(req.params.type.toLowerCase())) {
+		const climbs = await Climb.find({type: req.params.type}).exec();
+		res.render("climbs", {climbs});
+	} else {
+		res.send("please enter a valid genre");
+	}
+	
+	
+}); 
+
 // Show
 router.get("/:id", async (req, res) => {
 	try {
