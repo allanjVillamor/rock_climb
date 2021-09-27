@@ -6,6 +6,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
@@ -52,7 +53,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Mongoose Config
 try {
-	mongoose.connect(config.db.connection, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+	mongoose.connect(config.db.connection);
 } catch (error) {
 	console.log("Could not connect using config. Not working locally.");
 	mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
@@ -74,6 +75,9 @@ app.use(expressSession({
 
 // Method Override Config
 app.use(methodOverride('_method'));
+
+// Connect Flash Config
+app.use(flash());
 
 // Passport Config
 app.use(passport.initialize());
