@@ -17,16 +17,17 @@
           Types of Climbing
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Bouldering</a>
-          <a class="dropdown-item" href="#">Lead Climbing</a>
-          <a class="dropdown-item" href="#">Free Solo</a>
+          <a class="dropdown-item" href="/climbs/type/bouldering">Bouldering</a>
+          <a class="dropdown-item" href="/climbs/type/lead">Lead</a>
+          <a class="dropdown-item" href="/climbs/freesolo">Free Solo</a>
         </div>
       </li>
-	  <li class="nav-item">
-        <a class="nav-link" href="/climbs/new">Add Climb</a>
-      </li>
+	  
 		
 		<% if(user) { %>
+		 	<li class="nav-item">
+        		<a class="nav-link" href="/climbs/new">Add Climb</a>
+      		</li>
 			<li class="nav-item">
         		<a class="nav-link" href="/logout">Logout</a>
       		</li>
@@ -46,3 +47,13 @@
     </form>
   </div>
 </nav>
+<% if (successMessage && successMessage.length > 0) { %>
+<div class="alert alert-success" role="alert">
+	<%= successMessage %>
+</div>
+<% } %>
+<% if (errorMessage && errorMessage.length > 0) { %>
+<div class="alert alert-warning" role="alert">
+	<%= errorMessage %>
+</div>
+<% } %>
