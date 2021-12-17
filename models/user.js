@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
 	username: {type: String, required: true, unique: true}
 })
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose); // Takes stuff from passPortLocalMongoose and adds to userSchema
 
 module.exports = mongoose.model("user", userSchema);

@@ -98,7 +98,6 @@ router.get("/:id", async (req, res) => {
 
 // Edit
 router.get("/:id/edit", checkClimbOwner, async (req, res) => {
-	
 		const climb = await Climb.findById(req.params.id).exec();
 		res.render("climbs_edit", {climb});
 })
